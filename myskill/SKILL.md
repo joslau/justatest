@@ -1,7 +1,6 @@
 ---
 name: justatest
-description: Get time
-version: 1.0.0
+description: GetTime
 ---
 
 # Time Logger Instructions
