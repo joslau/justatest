@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<script>
+    window['ai_edge_gallery_get_result'] = async (data) => {
+        try {
+            // 1. 獲取當前精確時間
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('zh-HK');
+            const timeStr = now.toLocaleTimeString('zh-HK');
+
+            // 2. 直接將時間文字傳回給 LLM (不使用 webview)
+            return JSON.stringify({
+                result: `擷取成功！Date: ${dateStr}, Time: ${timeStr}`
+            });
+        } catch (e) {
+            return JSON.stringify({ error: e.message });
+        }
+    };
+</script>
+</body>
+</html>
