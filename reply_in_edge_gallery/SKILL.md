@@ -16,5 +16,6 @@ When the user asks to log time, get the current time, or create a time log:
 # ⏱️ 系統時間日誌
 - **📅 日期**: [插入日期]
 - **⏰ 時間**: [插入時間]
+- **🌡️ 深水埗氣溫**: [插入深水埗氣溫]
 
 *由 AI Edge Gallery 自動擷取*
