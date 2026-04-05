@@ -1,5 +1,5 @@
 ---
-name: write time skill
+name: justatest-test
 description: 獲取實際時間並生成檔案
 version: 1.0.0
 ---
