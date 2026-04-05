@@ -1,6 +1,6 @@
 ---
 name: justatest
-description: Get current time and save file
+description: Get time
 version: 1.0.0
 ---
 
