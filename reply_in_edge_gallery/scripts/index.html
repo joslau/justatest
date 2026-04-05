@@ -12,9 +12,27 @@
             const dateStr = now.toLocaleDateString('zh-HK');
             const timeStr = now.toLocaleTimeString('zh-HK');
 
-            // 2. 直接將時間文字傳回給 LLM (不使用 webview)
+            // 2. 獲取香港天文台即時天氣 API
+            let sspTemp = "暫時無法獲取";
+            try {
+                const response = await fetch('https://data.weather.gov.hk/weatherAPI/opendata/weather.php?dataType=rhrread&lang=tc');
+                const weatherData = await response.json();
+                
+                // 3. 在 API 資料中尋找「深水埗」的氣溫
+                const tempArray = weatherData.temperature.data;
+                const sspData = tempArray.find(station => station.place === '深水埗');
+                
+                if (sspData) {
+                    sspTemp = sspData.value;
+                }
+            } catch (apiError) {
+                console.error("無法連接天文台 API:", apiError);
+                // API 失敗時繼續執行，不要讓整個 Skill 崩潰
+            }
+
+            // 4. 將時間和天氣資料傳回給 LLM
             return JSON.stringify({
-                result: `擷取成功！Date: ${dateStr}, Time: ${timeStr}`
+                result: `擷取成功！Date: ${dateStr}, Time: ${timeStr}, SSP_Temperature: ${sspTemp}`
             });
         } catch (e) {
             return JSON.stringify({ error: e.message });
