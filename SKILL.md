@@ -3,11 +3,6 @@
 name: write_time_skill
 description: 獲取實際時間並生成檔案
 version: 1.0.0
-triggers:
-  - "我想記錄時間"
-  - "幫我存下現在的時間"
-  - "建立一個時間日誌檔"
-  - "Log the current time"
 ---
 
 # Time Logger Instructions
