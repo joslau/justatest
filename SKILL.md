@@ -1,23 +1,31 @@
 ---
-name: write_time_skill
-description: Retrieves the current time and generates a file for user download.
+name: Time Logger Skill
+description: 獲取當前系統時間並生成可下載的 .md 日誌檔案。
+triggers:
+  - "我想記錄時間"
+  - "幫我存下現在的時間"
+  - "建立一個時間日誌檔"
+  - "Log the current time"
 ---
 
-# Overview
-The **write_time_skill** is designed to fetch the current time upon user request and generate a downloadable file containing the time-stamp. It simplifies the process of creating quick time records.
+# Time Logger Instructions
 
-## Instructions
-1. **Step One (步驟一):** Receive the user command to execute the skill.  
-   【步驟一】收到指令，準備執行。
-2. **Step Two (步驟二):** Retrieve the current time and generate a time-stamped file.  
-   【步驟二】調用技能，生成包含當前時間的檔案。
-3. **Step Three (步驟三):** Guide the user to save the time-stamped file by clicking the "Download" button.  
-   【步驟三】引導用戶通過點擊 "下載" 按鈕來保存檔案。
+## 1. 技能目標
+當使用者要求記錄時間或建立時間日誌時，執行此技能來獲取系統精確時間，並呈現一個帶有「儲存按鈕」的介面，讓使用者下載 `.md` 檔案。
 
-## Examples
-- User Command: "Save time file."
-- Generated File: `time_2026-04-05_15-30.txt`
+## 2. 執行流程 (Workflow)
+1. **識別請求**：監測使用者是否提到「時間」、「記錄」、「儲存」或「日誌」等關鍵字。
+2. **觸發技能**：呼叫 `ai_edge_gallery_get_result` 函數。
+3. **呈現介面**：系統會自動彈出 `ui.html` 介面，顯示當前的日期與時間。
+4. **引導使用者**：在介面出現後，你必須主動引導使用者點擊畫面上的 **「💾 儲存 .md 日誌檔」** 按鈕來完成檔案儲存。
 
-## Error Handling
-- If the time cannot be retrieved, a message will display: "Unable to fetch current time. Please try again."
-- If the file generation fails, provide instructions to retry.
+## 3. 輸出規格 (Output Specification)
+**當技能執行成功時，你必須產出包含以下資訊的結果，以確保 UI 能夠正確對接：**
+
+- **Action**: `display_time_ui`
+- **Status**: `Success`
+- **User Guidance**: 「時間已擷取成功！請點擊下方視窗中的按鈕，將當前時間儲存為 Markdown 檔案。」
+
+## 4. 錯誤處理 (Error Handling)
+- 如果使用者要求的操作與時間紀錄無關，請拒絕執行此技能並詢問具體需求。
+- 如果 UI 載入失敗，請提示使用者「請嘗試重新整理或再次輸入指令」。
