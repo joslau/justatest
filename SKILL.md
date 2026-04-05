@@ -1,6 +1,6 @@
 ---
-name: justatest-test
-description: 獲取實際時間並生成檔案
+name: justatest
+description: Get current time and save file
 version: 1.0.0
 ---
 
