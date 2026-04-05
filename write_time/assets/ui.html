@@ -1,43 +1,61 @@
 <!DOCTYPE html>
 <html lang="zh-HK">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>儲存時間檔案</title>
-  <style>
-    body { font-family: -apple-system, sans-serif; text-align: center; padding: 20px; background: #f9f9f9; }
-    .card { background: white; padding: 30px 20px; border-radius: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-top: 20px;}
-    h2 { margin: 0 0 10px 0; color: #333; }
-    p { font-size: 20px; color: #666; margin-bottom: 30px; font-weight: bold; }
-    button { 
-      background: #007AFF; color: white; border: none; 
-      padding: 14px 24px; font-size: 16px; font-weight: bold;
-      border-radius: 10px; cursor: pointer; width: 100%;
-    }
-    button:active { background: #0056b3; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Logger</title>
+    <style>
+        body { 
+            font-family: sans-serif; 
+            text-align: center; 
+            margin: 0; 
+            padding: 20px; 
+            background-color: white;
+        }
+        h3 { color: #333; margin-top: 0; }
+        .time-box {
+            font-size: 18px;
+            color: #555;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        button { 
+            background: #2b70f3; 
+            color: white; 
+            border: none; 
+            padding: 12px 24px; 
+            border-radius: 8px; 
+            font-size: 16px; 
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-  <div class="card">
-    <h2>🕒 獲取時間成功</h2>
-    <p id="displayTime">載入中...</p>
+    <h3>⏱️ 獲取時間成功</h3>
+    
+    <div class="time-box">
+        <div id="dateText">載入中...</div>
+        <div id="timeText"></div>
+    </div>
+    
     <button id="saveBtn">💾 儲存 .md 日誌檔</button>
-  </div>
-  <script>
-      // 當網頁載入時執行
-      window.onload = () => {
-          // 1. 讀取網址入面嘅參數
-          const params = new URLSearchParams(window.location.search);
-          
-          // 2. 攞返 date 同 time 出嚟 (如果無就顯示 unknown)
-          const dateStr = params.get('date') || 'unknown_date';
-          const timeStr = params.get('time') || 'unknown_time';
-  
-          // 3. 將畫面上的字替換成真實時間
-          // 注意：請將 'dateText' 同 'timeText' 換成你 HTML 裡面實際對應嘅 id
-          document.getElementById('dateText').innerText = dateStr;
-          document.getElementById('timeText').innerText = timeStr;
-      };
-  </script>
+
+    <script>
+        // 當網頁載入完成後執行
+        window.onload = () => {
+            try {
+                // 從網址讀取時間參數 (例如 ?date=xxx&time=xxx)
+                const params = new URLSearchParams(window.location.search);
+                const dateStr = params.get('date') || '未能獲取日期';
+                const timeStr = params.get('time') || '未能獲取時間';
+
+                // 將讀取到的時間替換到畫面上
+                document.getElementById('dateText').innerText = dateStr;
+                document.getElementById('timeText').innerText = timeStr;
+            } catch (e) {
+                document.getElementById('dateText').innerText = '載入發生錯誤';
+            }
+        };
+    </script>
 </body>
 </html>
