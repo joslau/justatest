@@ -1,5 +1,5 @@
 ---
-name: justatest
+name: myskill
 description: GetTime
 ---
 
