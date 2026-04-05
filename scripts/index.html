@@ -1,11 +1,21 @@
-<!doctype html>
-<html lang="zh-HK">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Time Logger Skill</title>
-  </head>
-  <body>
-    <script src="index.js"></script>
-  </body>
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+    window['ai_edge_gallery_get_result'] = async (data) => {
+        try {
+            // 話俾 App 聽：我要顯示一個 webview 介面
+            return JSON.stringify({
+                result: "Time successfully captured! Please use the UI below.",
+                webview: {
+                    url: "ui.html",
+                    aspectRatio: 1.0
+                }
+            });
+        } catch (e) {
+            return JSON.stringify({ error: e.message });
+        }
+    };
+</script>
+</body>
 </html>
