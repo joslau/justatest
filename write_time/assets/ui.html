@@ -44,14 +44,38 @@
         // 當網頁載入完成後執行
         window.onload = () => {
             try {
-                // 從網址讀取時間參數 (例如 ?date=xxx&time=xxx)
+                // 1. 從網址讀取時間參數
                 const params = new URLSearchParams(window.location.search);
                 const dateStr = params.get('date') || '未能獲取日期';
                 const timeStr = params.get('time') || '未能獲取時間';
 
-                // 將讀取到的時間替換到畫面上
+                // 2. 將讀取到的時間替換到畫面上
                 document.getElementById('dateText').innerText = dateStr;
                 document.getElementById('timeText').innerText = timeStr;
+
+                // 3. 處理「儲存按鈕」的點擊事件
+                document.getElementById('saveBtn').onclick = () => {
+                    // 準備要寫入 .md 檔案的內容
+                    const mdContent = `# 時間日誌\n\n- **日期**: ${dateStr}\n- **時間**: ${timeStr}\n\n*由 AI Edge Gallery 自動生成*`;
+                    
+                    // 將內容轉換為 Blob (檔案物件)
+                    const blob = new Blob([mdContent], { type: 'text/markdown' });
+                    
+                    // 建立一個隱藏的下載連結
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = `TimeLog_${dateStr.replace(/\//g, '')}_${timeStr.replace(/:/g, '')}.md`; 
+                    
+                    // 模擬點擊下載
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+
+                    // 俾個視覺回饋用家
+                    document.getElementById('saveBtn').innerText = '✅ 下載請求已發送！';
+                    document.getElementById('saveBtn').style.background = '#28a745';
+                };
+
             } catch (e) {
                 document.getElementById('dateText').innerText = '載入發生錯誤';
             }
