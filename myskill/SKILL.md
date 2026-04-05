@@ -1,6 +1,6 @@
 ---
 name: myskill
-description: GetTime
+description: gettime
 ---
 
 # Time Logger Instructions
