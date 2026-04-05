@@ -48,3 +48,5 @@
 1. 將此代碼庫整合至支援Google AI Edge Gallery app 中技能架構的環境中。
 2. 確保 AI 模型能夠正確解析 `SKILL.md` 並具備執行 HTML/JS 的能力 (`run_js` tool)。
 3. 在對話中向 AI 發送如「幫我記錄時間」或「現在幾點」等指令即可測試。
+
+<img src=".image/WhatsApp%20Image%202026-04-06%20at%2000.17.01.jpeg">
