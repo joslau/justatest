@@ -1,5 +1,5 @@
 ---
-name: Time Logger Skill
+name: Time-Logger-Skill
 description: 獲取當前系統時間並生成可下載的 .md 日誌檔案。
 triggers:
   - "我想記錄時間"
