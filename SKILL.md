@@ -1,9 +1,6 @@
 ---
 name: write_time_skill
 description: Retrieves the current time and generates a file for user download.
-version: 1.0.0
-author: joslau
-license: MIT
 ---
 
 # Overview
