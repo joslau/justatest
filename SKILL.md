@@ -1,6 +1,8 @@
+
 ---
-name: Time-Logger-Skill
-description: 獲取當前系統時間並生成可下載的 .md 日誌檔案。
+name: write_time_skill
+description: 獲取實際時間並生成檔案
+version: 1.0.0
 triggers:
   - "我想記錄時間"
   - "幫我存下現在的時間"
