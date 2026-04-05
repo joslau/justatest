@@ -1,4 +1,3 @@
-
 ---
 name: write_time_skill
 description: 獲取實際時間並生成檔案
