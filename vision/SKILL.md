@@ -3,7 +3,7 @@ name: object_detector
 description: 使用相機即時偵測畫面中的物件，並返回辨識結果。支援手機前後鏡頭切換。
 metadata:
   require-secret: false
-  homepage: https://github.com/YOUR_USERNAME/object-detector-skill
+  homepage: https://github.com/joslau/justatest
 ---
 
 # MediaPipe 物件偵測器
