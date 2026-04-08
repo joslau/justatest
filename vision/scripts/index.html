@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MediaPipe Object Detector</title>
+</head>
+<body>
+    <script type="module">
+        // 使用動態 import 來載入 MediaPipe，避免阻塞
+        let objectDetector = null;
+
+        // 初始化模型的函數
+        async function initModel() {
+            const { ObjectDetector, FilesetResolver } = await import("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3");
+            const vision = await FilesetResolver.forVisionTasks(
+                "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/wasm"
+            );
+            objectDetector = await ObjectDetector.createFromOptions(vision, {
+                baseOptions: {
+                    modelAssetPath: "https://storage.googleapis.com/mediapipe-models/object_detector/efficientdet_lite0/int8/1/efficientdet_lite0.tflite",
+                    delegate: "GPU"
+                },
+                scoreThreshold: 0.5,
+                runningMode: "IMAGE"
+            });
+        }
+
+        // 官方規定的全域進入點
+        window['ai_edge_gallery_get_result'] = async (data) => {
+            try {
+                // 1. 如果模型未載入，先載入模型
+                if (!objectDetector) {
+                    await initModel();
+                }
+
+                // 2. 啟動手機後置鏡頭 (透過標準 Web API)
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { facingMode: "environment" } 
+                });
+                
+                // 3. 建立一個隱藏的 video 元素來播放相機畫面
+                const video = document.createElement('video');
+                video.srcObject = stream;
+                video.setAttribute("playsinline", true); // iOS Safari 必備
+                await video.play();
+
+                // 4. 等待一下讓對焦穩定，然後擷取畫面進行辨識
+                const detections = objectDetector.detect(video);
+
+                // 5. 關閉相機 (釋放資源非常重要)
+                stream.getTracks().forEach(track => track.stop());
+
+                // 6. 整理結果
+                if (detections.detections.length > 0) {
+                    const labels = detections.detections.map(d => d.categories[0].categoryName).join(", ");
+                    return JSON.stringify({
+                        result: `我偵測到畫面有：${labels}`
+                    });
+                } else {
+                    return JSON.stringify({
+                        result: "畫面入面冇明顯嘅物件。"
+                    });
+                }
+
+            } catch (error) {
+                // 捕捉錯誤 (例如用戶拒絕相機權限，或 App 的 WebView 阻擋了相機)
+                console.error(error);
+                return JSON.stringify({
+                    error: `辨識失敗。可能係相機權限問題，錯誤訊息：${error.message}`
+                });
+            }
+        };
+    </script>
+</body>
+</html>
