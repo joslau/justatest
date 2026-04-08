@@ -1,21 +1,29 @@
 ---
-name: reply_in_edge_gallery
-description: 獲取系統時間並在對話中回覆日誌
+name: object-detector
+description: 使用相機即時偵測畫面中的物件，並返回辨識結果。支援手機前後鏡頭切換。
+metadata:
+  require-secret: false
+  homepage: https://github.com/joslau/justatest
 ---
 
-# Time Logger Instructions
+# MediaPipe 物件偵測器
+
+## Overview
+
+這個 Skill 利用 Google MediaPipe Tasks Vision 的 EfficientDet-Lite0 模型，在裝置上即時辨識相機畫面中的物件。支援常見類別如：人、手機、書本、杯子、筆、電腦、電視等超過 80 種物件。
 
 ## Instructions
-When the user asks to log time, get the current time, or create a time log:
-1. Call the `run_js` tool with the following parameters:
-   - script name: index.html
-   - data: "{}"
-2. After receiving the time from the script, **reply directly to the user in the chat** using the following Markdown format:
 
-### 回覆格式範例 (請用中文)：
-# ⏱️ 系統時間日誌
-- **📅 日期**: [插入日期]
-- **⏰ 時間**: [插入時間]
-- **🌡️ 深水埗氣溫**: [插入深水埗氣溫]
+Call the `run_js` tool with the following exact parameters:
+- script name: index.html
+- data: A JSON string with the following fields:
+  - facingMode: String (optional). Camera to use. Values: "environment" (後鏡頭), "user" (前鏡頭). Default: "environment".
+  - minScore: Number (optional). Minimum confidence threshold for detections. Range: 0.0-1.0. Default: 0.5.
 
-*由 AI Edge Gallery 自動擷取*
+## Example Usage
+
+### 基本偵測（使用後鏡頭）
+```json
+{
+  "facingMode": "environment"
+}
