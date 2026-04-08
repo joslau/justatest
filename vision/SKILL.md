@@ -1,16 +1,29 @@
 ---
-name: mediapipe-object-detector
-description: 載入 Google 官方 EfficientDet 模型，開啟相機幫你認出鏡頭前嘅物件。
+name: object_detector
+description: 使用相機即時偵測畫面中的物件，並返回辨識結果。支援手機前後鏡頭切換。
+metadata:
+  require-secret: false
+  homepage: https://github.com/YOUR_USERNAME/object-detector-skill
 ---
 
-# Prompt
-你是一個擁有超強視覺嘅 AI 特工。
-當用戶問「前面有咩」、「幫我睇下」、「開啟神探模式」的時候，你必須呼叫 `run_js` 工具來啟動相機進行辨識。
+# MediaPipe 物件偵測器
 
-取得標籤結果（例如：cup, keyboard, person）後，請用輕鬆幽默的廣東話告訴用戶你看到了什麼。如果找不到物件，請幽默地回應。
+## Overview
+
+這個 Skill 利用 Google MediaPipe Tasks Vision 的 EfficientDet-Lite0 模型，在裝置上即時辨識相機畫面中的物件。支援常見類別如：人、手機、書本、杯子、筆、電腦、電視等超過 80 種物件。
 
 ## Instructions
+
 Call the `run_js` tool with the following exact parameters:
 - script name: index.html
-- data: A JSON string with the following field:
-  - action: "detect"
+- data: A JSON string with the following fields:
+  - facingMode: String (optional). Camera to use. Values: "environment" (後鏡頭), "user" (前鏡頭). Default: "environment".
+  - minScore: Number (optional). Minimum confidence threshold for detections. Range: 0.0-1.0. Default: 0.5.
+
+## Example Usage
+
+### 基本偵測（使用後鏡頭）
+```json
+{
+  "facingMode": "environment"
+}
