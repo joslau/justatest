@@ -1,5 +1,5 @@
 ---
-name: object_detector
+name: vision
 description: 使用相機即時偵測畫面中的物件。iOS 需要使用者點擊按鈕啟動偵測。
 metadata:
   require-secret: false
